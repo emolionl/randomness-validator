@@ -1,0 +1,14 @@
+[
+    {
+        "timestamp": "2025-01-13T10:00:00Z",
+        "trng_output": 1
+    },
+    {
+        "timestamp": "2025-01-13T10:00:01Z",
+        "trng_output": 1
+    },
+    {
+        "timestamp": "2025-01-13T10:00:02Z",
+        "trng_output": 1
+    }
+]
