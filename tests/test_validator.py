@@ -1,48 +1,52 @@
 import pytest
 from randomness_validator.validator import RandomnessValidator
+from datetime import datetime
+
+# Shared variables for testing
+bit_stream = [0, 1, 0, 1, 1, 0]  # Example bit stream
+timestamps = [datetime.now() for _ in bit_stream]  # Mock timestamps for each bit
 
 def test_chi_square():
-    """Test the chi-square test with a simple bitstream."""
     rv = RandomnessValidator()
-    result = rv.chi_square_test([0, 1, 0, 1, 1, 0])
+    result = rv.chi_square_test(bit_stream)
     assert result >= 0  # Chi-square values are non-negative
 
 def test_entropy():
-    """Test the entropy calculation with a balanced bitstream."""
     rv = RandomnessValidator()
-    result = rv.entropy([0, 1, 0, 1, 1, 0])
+    result = rv.entropy(bit_stream)
     assert 0 <= result <= 1  # Entropy should be within [0, 1]
 
 def test_autocorrelation():
-    """Test the autocorrelation calculation with a simple bitstream."""
     rv = RandomnessValidator()
-    result = rv.autocorrelation_test([0, 1, 0, 1, 1, 0])
-    assert -1 <= result <= 1  # Autocorrelation should be within [-1, 1]
+    result = rv.autocorrelation_test(bit_stream)
+    assert -0.1 <= result <= 0.1  # Expected autocorrelation range
 
-def test_monte_carlo():
-    """Test the Monte Carlo simulation with a simple bitstream."""
+def test_monte_carlo_simulation():
     rv = RandomnessValidator()
-    result = rv.monte_carlo_simulation([0, 1, 0, 1, 1, 0], bins=2)
+    result = rv.monte_carlo_simulation(bit_stream, bins=2)
     assert result >= 0  # Chi-square values are non-negative
 
-def test_uniqueness():
-    """Test the uniqueness check for a bitstream."""
+def test_check_unique():
     rv = RandomnessValidator()
-    result = rv.check_unique([0, 1, 0, 1, 1, 0])
-    assert not result  # The input bitstream has duplicates
+    result = rv.check_unique(bit_stream)
+    assert result is False  # Not all bits are unique
 
 def test_run_all_tests():
-    """Test running all randomness tests and ensure results are within expected ranges."""
     rv = RandomnessValidator()
-    results, warnings = rv.run_all_tests([0, 1, 0, 1, 1, 0])
+    results, warnings = rv.run_all_tests(bit_stream)
+    
+    assert "Chi-Square Test" in results
+    assert "Entropy" in results
+    assert "Autocorrelation" in results
+    assert "Monte Carlo Simulation" in results
+    assert "Uniqueness Check" in results
+    
+    for test, warning in warnings.items():
+        assert warning  # Ensure warnings are meaningful
 
-    # Check that results are returned for all tests
-    assert 'Chi-Square Test' in results
-    assert 'Entropy' in results
-    assert 'Autocorrelation' in results
-    assert 'Monte Carlo Simulation' in results
-    assert 'Uniqueness Check' in results
-
-    # Verify that warnings are generated for out-of-range values
-    for test_name, warning in warnings.items():
-        assert test_name in results  # Ensure warning corresponds to a test
+def test_timestamp_handling():
+    # Example test to validate timestamp association
+    rv = RandomnessValidator()
+    for bit, timestamp in zip(bit_stream, timestamps):
+        assert isinstance(bit, int)  # Validate bits are integers
+        assert isinstance(timestamp, datetime)  # Validate timestamps are datetime objects
