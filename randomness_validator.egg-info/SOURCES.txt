@@ -1,0 +1,11 @@
+LICENCE
+README.md
+pyproject.toml
+setup.py
+randomness_validator/__init__.py
+randomness_validator/validator.py
+randomness_validator.egg-info/PKG-INFO
+randomness_validator.egg-info/SOURCES.txt
+randomness_validator.egg-info/dependency_links.txt
+randomness_validator.egg-info/requires.txt
+randomness_validator.egg-info/top_level.txt

@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: randomness-validator
+Version: 0.1.0
+Summary: A library for validating randomness in numeric streams.
+Home-page: https://github.com/emolionl/randomness-validator
+Author: Davor Radic
+Author-email: info@emolio.nl
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
